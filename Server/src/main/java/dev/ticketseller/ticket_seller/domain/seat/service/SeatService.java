@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +18,14 @@ public class SeatService {
     
     private final SeatRepository seatRepository;
     private final ReservationRepository reservationRepository;
+    private final Random random = new Random();
     
     // 모든 좌석 조회
     public List<Seat> getAllSeats() {
         return seatRepository.findAllByOrderByIdAsc();
     }
     
-    // 좌석 예약
+    // 좌석 예약 (99% 성공, 1% 실패)
     @Transactional
     public Reservation reserveSeat(Integer seatNumber, String fname, String lname, String email) {
         // 좌석 번호로 좌석 찾기
@@ -33,6 +35,12 @@ public class SeatService {
         // 좌석이 이미 예약되었는지 확인
         if (!seat.isAvailable()) {
             throw new RuntimeException("이미 예약된 좌석입니다.");
+        }
+        
+        // 99% 확률로 성공, 1% 확률로 실패 처리
+        int randomValue = random.nextInt(100);
+        if (randomValue < 1) { // 1% 확률로 실패
+            throw new RuntimeException("예약 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
         
         // 좌석 상태를 예약됨으로 변경 (불변 객체이므로 새로 생성)
