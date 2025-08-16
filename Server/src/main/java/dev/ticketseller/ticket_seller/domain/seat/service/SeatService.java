@@ -35,16 +35,20 @@ public class SeatService {
             throw new RuntimeException("이미 예약된 좌석입니다.");
         }
         
-        // 좌석 상태를 예약됨으로 변경
-        seat.setAvailable(false);
-        seatRepository.save(seat);
+        // 좌석 상태를 예약됨으로 변경 (불변 객체이므로 새로 생성)
+        Seat updatedSeat = Seat.builder()
+                .id(seat.getId())
+                .number(seat.getNumber())
+                .isAvailable(false)
+                .build();
+        seatRepository.save(updatedSeat);
         
         // 예약 생성
         Reservation reservation = Reservation.builder()
                 .fname(fname)
                 .lname(lname)
                 .email(email)
-                .seat(seat)
+                .seat(updatedSeat)
                 .build();
         
         return reservationRepository.save(reservation);
