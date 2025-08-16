@@ -1,7 +1,7 @@
 package dev.ticketseller.ticket_seller.domain.reservation.domain;
 
 import dev.ticketseller.ticket_seller.domain.common.BaseEntity;
-import dev.ticketseller.ticket_seller.domain.performance.domain.Seat;
+import dev.ticketseller.ticket_seller.domain.seat.domain.Seat;
 import jakarta.persistence.*;
 import lombok.*;
 

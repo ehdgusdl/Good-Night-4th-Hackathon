@@ -1,4 +1,4 @@
-package dev.ticketseller.ticket_seller.domain.performance.domain;
+package dev.ticketseller.ticket_seller.domain.seat.domain;
 
 import dev.ticketseller.ticket_seller.domain.common.BaseEntity;
 import jakarta.persistence.*;
@@ -20,6 +20,7 @@ public class Seat extends BaseEntity{
     private Integer number;
 
     @Column(name = "is_available", nullable = false)
+    @Builder.Default
     private boolean isAvailable = true;
     
 }
